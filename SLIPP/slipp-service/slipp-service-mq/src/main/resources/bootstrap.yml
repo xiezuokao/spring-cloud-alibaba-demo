@@ -1,0 +1,57 @@
+spring:
+  profiles:
+    active: test
+mybatis-plus:
+  configuration:
+    mapUnderscoreToCamelCase: true
+#日志路径
+logging:
+  path: ./log
+  file: ./log/service-mq/run.log
+
+
+#测试环境
+---
+server:
+  port: 6700
+spring:
+  profiles: test
+  application:
+    name: slipp-microservice-mq
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.16.4:6500
+        namespace: ec46116a-0c2c-4e8d-b5e6-0271cc82e0c7
+      config:
+        server-addr: 192.168.16.4:6500
+        namespace: ec46116a-0c2c-4e8d-b5e6-0271cc82e0c7
+        file-extension: yml
+
+#生产环境
+---
+server:
+  port: 6700
+spring:
+  profiles: pro
+  application:
+    name: slipp-microservice-mq
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:6500
+        namespace: a53c2ab7-ce65-4875-8d28-c6df6f4e5ab1
+      config:
+        server-addr: localhost:6500
+        namespace: a53c2ab7-ce65-4875-8d28-c6df6f4e5ab1
+        file-extension: yml

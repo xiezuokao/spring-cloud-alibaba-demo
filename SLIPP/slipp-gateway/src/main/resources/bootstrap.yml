@@ -1,0 +1,68 @@
+spring:
+  profiles:
+    active: test
+#日志路径
+logging:
+  path: ./log
+  file: ./log/gateway/run.log
+
+
+#测试环境
+---
+server:
+  port: 6600
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 500
+    max-connections: 20000
+spring:
+  application:
+    name: slipp-gateway
+  profiles: test
+  cloud:
+    sentinel:
+      #接入sentinel控制台
+      transport:
+        dashboard: 127.0.0.1:8080
+      #饥饿加载
+      eager: true
+      #持久化限流熔断配置
+      datasource:
+        ds:
+          nacos:
+            server-addr: 192.168.16.4:6500
+            namespace: ec46116a-0c2c-4e8d-b5e6-0271cc82e0c7
+            dataType: json
+            dataId: slipp-gateway-sentinel
+            groupId: DEFAULT_GROUP
+            ruleType: flow
+    nacos:
+      discovery:
+        server-addr: 192.168.16.4:6500
+        namespace: ec46116a-0c2c-4e8d-b5e6-0271cc82e0c7
+      config:
+        server-addr: 192.168.16.4:6500
+        namespace: ec46116a-0c2c-4e8d-b5e6-0271cc82e0c7
+        file-extension: yml
+
+#生产环境
+---
+server:
+  port: 6600
+spring:
+  application:
+    name: slipp-gateway
+  profiles: pro
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+      eager: true
+    nacos:
+      discovery:
+        server-addr: localhost:6500
+        namespace: a53c2ab7-ce65-4875-8d28-c6df6f4e5ab1
+      config:
+        server-addr: localhost:6500
+        namespace: a53c2ab7-ce65-4875-8d28-c6df6f4e5ab1
+        file-extension: yml
