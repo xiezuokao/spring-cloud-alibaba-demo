@@ -20,14 +20,6 @@ spring:
     name: slipp-gateway
   profiles: test
   cloud:
-    nacos:
-      discovery:
-        server-addr: 192.168.16.4:6500,192.168.16.4:6501
-        namespace: 7b82f76b-7f69-4f68-bc49-7a3de38a5d7f
-      config:
-        server-addr: ${spring.cloud.nacos.discovery.server-addr}
-        namespace: ${spring.cloud.nacos.discovery.namespace}
-        file-extension: yml
     sentinel:
       #接入sentinel控制台
       transport:
@@ -38,13 +30,20 @@ spring:
       datasource:
         ds:
           nacos:
-            server-addr: ${spring.cloud.nacos.discovery.server-addr}
-            namespace: ${spring.cloud.nacos.discovery.namespace}
+            server-addr: 192.168.16.4:6500,192.168.16.4:6501
+            namespace: 7b82f76b-7f69-4f68-bc49-7a3de38a5d7f
             dataType: json
             dataId: slipp-gateway-sentinel
             groupId: DEFAULT_GROUP
             ruleType: flow
-
+    nacos:
+      discovery:
+        server-addr: 192.168.16.4:6500,192.168.16.4:6501
+        namespace: 7b82f76b-7f69-4f68-bc49-7a3de38a5d7f
+      config:
+        server-addr: 192.168.16.4:6500,192.168.16.4:6501
+        namespace: 7b82f76b-7f69-4f68-bc49-7a3de38a5d7f
+        file-extension: yml
 
 #生产环境
 ---

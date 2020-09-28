@@ -10,6 +10,22 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>slipp-api</artifactId>
-
+    <packaging>pom</packaging>
+    <modules>
+        <module>slipp-api-mq</module>
+    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>com.hecai</groupId>
+            <artifactId>slipp-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-annotation</artifactId>
+            <version>3.2.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 </project>

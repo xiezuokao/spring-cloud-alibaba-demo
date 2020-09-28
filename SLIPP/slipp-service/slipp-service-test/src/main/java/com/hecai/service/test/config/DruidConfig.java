@@ -4,6 +4,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -19,18 +20,21 @@ import java.util.Map;
  * Druid连接池配置
  */
 @Configuration
+@RefreshScope
 public class DruidConfig {
 
     @ConfigurationProperties(prefix = "spring.datasource")
     @Bean
+    @ConditionalOnMissingBean
     public DataSource druidDataSource() {
-//        return new DruidDataSource();
-        return DruidDataSourceBuilder.create().build();
+        return new DruidDataSource();
+//        return DruidDataSourceBuilder.create().build();
     }
 
     //因为Springboot内置了servlet容器，所以没有web.xml，替代方法就是将ServletRegistrationBean注册进去
     //加入后台监控
     @Bean  //这里其实就相当于servlet的web.xml
+    @ConditionalOnMissingBean
     public ServletRegistrationBean statViewServlet() {
         ServletRegistrationBean<StatViewServlet> bean =
                 new ServletRegistrationBean<StatViewServlet>(new StatViewServlet(), "/druid/*");
@@ -52,6 +56,7 @@ public class DruidConfig {
 
     //再配置一个过滤器，Servlet按上面的方式注册Filter也只能这样
     @Bean
+    @ConditionalOnMissingBean
     public FilterRegistrationBean webStatFilter() {
         FilterRegistrationBean bean = new FilterRegistrationBean();
         //可以设置也可以获取,设置一个阿里巴巴的过滤器

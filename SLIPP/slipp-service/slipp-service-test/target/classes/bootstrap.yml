@@ -48,8 +48,10 @@ seata:
   enable-auto-data-source-proxy: true
   #  use-jdk-proxy: false
   service:
+    #这里的名字与file.conf中vgroup_mapping.my_test_tx_group = "default"相同
     vgroup-mapping:
       my_test_tx_group: default
+    #这里的名字与file.conf中default.grouplist = "127.0.0.1:8091"相同
     grouplist:
       default: 192.168.16.4:8091
   #      disable-global-transaction: false

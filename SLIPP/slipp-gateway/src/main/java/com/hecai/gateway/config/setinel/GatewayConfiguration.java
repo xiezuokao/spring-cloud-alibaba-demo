@@ -16,7 +16,7 @@
 //import java.util.Set;
 //
 ///**
-// * sentinel断路器配置
+// * sentinel断路器代码配置
 // */
 ////@Configuration
 //public class GatewayConfiguration {
