@@ -3,7 +3,7 @@
 * 下载 [seata-server-1.3.0](https://github.com/seata/seata/releases)
 * 下载 [sentinel-dashboard-1.8.0](https://github.com/alibaba/Sentinel/releases)
 
-##技术栈
+## 技术栈
 * nacos 注册中心与配置中心
 * gateway 服务网关
 * sentinel 限流熔断（在gateway层结合nacos动态配置接口限流熔断）
