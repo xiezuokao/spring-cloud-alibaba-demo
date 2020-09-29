@@ -1,0 +1,23 @@
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - name: Retry #重试机制配置
+          args:
+            retries: 2 #重试次数
+            series: #不指定错误码系列
+            statuses: BAD_GATEWAY,INTERNAL_SERVER_ERROR,SERVICE_UNAVAILABLE #500，502状态重试
+            methods: GET,POST # 只有get和post接口重试
+      routes:
+        - id: slipp-microservice-test
+          uri: lb://slipp-microservice-test
+          predicates:
+            - Path=/webtest/**
+          filters:
+            - StripPrefix=1
+        - id: slipp-microservice-mq
+          uri: lb://slipp-microservice-mq
+          predicates:
+            - Path=/mq/**
+          filters:
+            - StripPrefix=1

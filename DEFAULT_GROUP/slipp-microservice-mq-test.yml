@@ -1,0 +1,69 @@
+﻿spring:
+  #配置rabbitMq 服务器
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: 111111
+    password: 111111
+    #确认消息已发送到交换机(Exchange)
+    publisher-confirms: true
+    #确认消息已发送到队列(Queue)
+    publisher-returns: true
+
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/seata?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=UTC
+    username: 111111
+    password: 111111
+
+    type: com.alibaba.druid.pool.DruidDataSource # 设置类型为 DruidDataSource
+    filters: stat,wall,slf4j
+    validationQuery: SELECT 1 FROM DUAL
+    
+    #Spring Boot 默认是不注入这些属性值的，需要自己绑定
+    #druid 数据源专有配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    # 打开PSCache
+    poolPreparedStatements: true
+    #指定每个连接上PSCache的大小
+    maxPoolPreparedStatementPerConnectionSize: 20
+    #合并多个DruidDataSource的监控数据
+    useGlobalDataSourceStat: true
+    #通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+    # Druid 自定义配置，对应 DruidDataSource 中的 setting 方法的属性
+    druid: # 设置 Druid 连接池的自定义配置。然后 DruidDataSourceAutoConfigure 会自动化配置 Druid 连接池。
+      min-idle: 0 # 池中维护的最小空闲连接数，默认为 0 个。
+      max-active: 20 # 池中最大连接数，包括闲置和使用中的连接，默认为 8 个。
+      logSlowSql: true
+      # 状态监控
+      filter: 
+        stat:
+        enabled: true
+        db-type: mysql
+        log-slow-sql: true
+        slow-sql-millis: 2000
+      # druid 监控页面
+      stat-view-servlet: 
+        url-pattern: /druid/*
+        reset-enable: false
+        enabled: true # 是否开启 StatViewServlet
+        login-username: root # 账号
+        login-password: root # 密码
+      # 监控过滤器
+      web-stat-filter:
+          enabled: true
+          exclusions:
+          - "*.js"
+          - "*.gif"
+          - "*.jpg"
+          - "*.png"
+          - "*.css"
+          - "*.ico"
+          - "/druid/*"
